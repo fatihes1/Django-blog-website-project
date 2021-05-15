@@ -1,0 +1,82 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+<div class="row">
+    <div class="col-md-12 offset-md-3">
+        <h3>Makaleler</h3>
+
+    </div>
+    <hr>
+</div>
+<div class="row mb-3">
+    <div class="col-md-12 offset-md-3">
+        <div class="col-lg-8">
+            <form class="d-flex">
+                {% csrf_token %}
+                <input class="form-control me-2" name="keyword" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Ara</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if articles %}
+{% for article in articles %}
+<div class="row">
+    <div class="col-md-12 offset-md-3">
+        <!-- Post Content Column -->
+        <div class="col-lg-8">
+
+            <!-- Title -->
+            <a style="text-decoration:none" href="{% url 'article:detail' article.id %}">
+                <h1 class="mt-4">{{ article.title }}</h1>
+            </a>
+
+            <!-- Author -->
+            <p class="lead">
+                {{ article.author.username }} tarafından yayınlandı.
+            </p>
+
+            <hr>
+
+            <!-- Date/Time -->
+            <p>{{ article.created_date }}</p>
+
+            <hr>
+
+            <!-- Preview Image -->
+            {% if article.article_image %}
+            <a style="text-decoration:none" href="/articles/article/{{ article.id }}"><img class="img-fluid rounded"
+                    src="{{ article.article_image.url }}" alt=""></a>
+            {% endif %}
+
+
+            <hr>
+
+            <!-- Post Content  -- Safe paremetresi html tagleinin gitmesi için-->
+            <p class="lead">{{ article.content|safe|truncatewords:70}}</p>
+
+            <a href="/articles/article/{{article.id}}" class="btn btn-warning"> Devamını Oku</a>
+            <hr>
+
+        </div>
+
+        <!-- Sidebar Widgets Column
+        <div class="col-md-4">
+    
+        </div>
+             -->
+
+    </div>
+</div>
+{% endfor %}
+
+
+{% else %}
+<div class="alert alert-danger">
+    Henüz makale bulunamadı !
+</div>
+{% endif %}
+
+{% endblock body %}

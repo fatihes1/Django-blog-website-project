@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FE Blog</title>
+    <!-- BOOTSTRAP STYLE CSS-->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min5.css' %}" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+  </head>
+
+  <body>
+    {% include "includes/navbar.html" %}
+
+    <div style="margin-bottom: 10rem;" class="container mt-3">
+      {% if messages %}
+      
+        {% for message in messages %}
+        {% if message.tags == "info" %}
+            <div  class="alert alert-danger" >{{ message }}</div>
+        {% else %}
+            <div  class="alert alert-{{ message.tags }}" >{{ message }}</div>
+        {% endif %}
+        {% endfor %}
+      
+      {% endif %} {% block body %} {% endblock body %}
+    </div>
+
+    <!-- BOOTSTRAP SCRPIT JS-->
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    <script src="{% static 'js/bootstrap.min5.js'%}"></script>
+    <script src="{% static 'js/jquery-3.2.1.min.js'%}"></script>
+    <!-- CODE SNIPPET-->
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+
+  </body>
+</html>
